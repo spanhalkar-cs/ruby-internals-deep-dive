@@ -19,16 +19,16 @@ Ripper.lex(code_b).each { |tok| p tok[1..3] }
 # --- Scenario A (Division) ---
 # [:on_ident, "total", CMDARG]
 # [:on_sp, " ", CMDARG]
-# [:on_op, "/", BEG]                       # <---------- as an operator
+# [:on_op, "/", BEG]                       # <---------- Tokenized as an Operator (:on_op)
 # [:on_sp, " ", BEG]
 # [:on_int, "2", END]
 
 # --- Scenario B (Regex) ---
 # [:on_ident, "total", CMDARG]
 # [:on_sp, " ", CMDARG]
-# [:on_op, "=", BEG]
+# [:on_op, "=", BEG]                       # <---------- The '=' changes the state to EXPR_BEG
 # [:on_sp, " ", BEG]
-# [:on_regexp_beg, "/", BEG]               # <---------- as an regex beginner
+# [:on_regexp_beg, "/", BEG]               # <---------- Tokenized as the BEGINNING of a string/regex!
 # [:on_tstring_content, "2", BEG]
 # [:on_regexp_end, "/", BEG]
 
