@@ -1,3 +1,6 @@
+## A forward slash / can mean division or a Regular Expression. 
+## The tokenizer decides this entirely based on its internal lexical state (EXPR_END vs EXPR_BEG).
+
 require 'ripper'
 
 # Scenario A: Division
@@ -28,3 +31,8 @@ Ripper.lex(code_b).each { |tok| p tok[1..3] }
 # [:on_regexp_beg, "/", BEG]               # <---------- as an regex beginner
 # [:on_tstring_content, "2", BEG]
 # [:on_regexp_end, "/", BEG]
+
+## NOTE
+# The lexer can't just see / and output a single token type. It has to look at its own history. 
+# Because the assignment operator = puts the lexer into the EXPR_BEG (Beginning of an expression) state, 
+# the lexer knows the next / must be a Regular Expression literal, not division.
